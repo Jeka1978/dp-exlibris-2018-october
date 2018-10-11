@@ -12,6 +12,6 @@ public class MailDaoImpl implements MailDao {
     @Override
     public MailInfo getMailInfo() {
 
-        return new MailInfo(dataFactory.getName(),dataFactory.getNumberBetween(1,3));
+        return new MailInfo(dataFactory.getName(),dataFactory.getNumberBetween(1,5));
     }
 }
