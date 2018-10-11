@@ -15,8 +15,8 @@ public class MailSenderImpl implements MailSender {
         MailInfo mailInfo = dao.getMailInfo();
         int mailCode = mailInfo.getMailCode();
         String body = null;
-        body = MailType.findByCode(mailCode).getMailGenerator().generateBody(mailInfo);
-        send(body);
+//        body = MailType.findByCode(mailCode).getMailGenerator().generateBody(mailInfo);
+//        send(body);
     }
 
     private void send(String body) {
