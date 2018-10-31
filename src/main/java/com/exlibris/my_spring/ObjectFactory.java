@@ -3,7 +3,10 @@ package com.exlibris.my_spring;
 import lombok.SneakyThrows;
 import org.reflections.Reflections;
 
+import javax.annotation.PostConstruct;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,8 +40,18 @@ public class ObjectFactory {
         type = resolveImpl(type);
         T t = type.newInstance();
         configure(t);
-//todo invoke init methods
+        invokeInitMethod(type, t);
         return t;
+    }
+
+    private <T> void invokeInitMethod(Class<T> type, T t) throws IllegalAccessException, InvocationTargetException {
+        Method[] methods = type.getMethods();
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(PostConstruct.class)) {
+                method.setAccessible(true);
+                method.invoke(t);
+            }
+        }
     }
 
     private <T> void configure(T t) {
