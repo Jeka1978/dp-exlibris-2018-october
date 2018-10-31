@@ -18,6 +18,7 @@ public class ObjectFactory {
     private Config config = new JavaConfig();
     private Reflections scanner = new Reflections("com.exlibris");
     private List<ObjectConfigurator> configurators = new ArrayList<>();
+    private List<ProxyConfigurator> proxyConfigurators = new ArrayList<>();
 
 
     public static ObjectFactory getInstance() {
@@ -29,6 +30,10 @@ public class ObjectFactory {
         Set<Class<? extends ObjectConfigurator>> classes = scanner.getSubTypesOf(ObjectConfigurator.class);
         for (Class<? extends ObjectConfigurator> aClass : classes) {
             configurators.add(aClass.newInstance());
+        }
+        Set<Class<? extends ProxyConfigurator>> set = scanner.getSubTypesOf(ProxyConfigurator.class);
+        for (Class<? extends ProxyConfigurator> aClass : set) {
+            proxyConfigurators.add(aClass.newInstance());
         }
     }
 
@@ -42,16 +47,16 @@ public class ObjectFactory {
         configure(t);
 
         invokeInitMethod(type, t);
-        if (type.isAnnotationPresent(Benchmark.class)) {
-            return (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), (proxy, method, args) -> {
-                System.out.println("************* BENCHMARK started for method "+method.getName());
-                long start = System.nanoTime();
-                Object retVal = method.invoke(t, args);
-                long end = System.nanoTime();
-                System.out.println(end-start);
-                System.out.println("************* BENCHMARK ended for method "+method.getName());
-                return retVal;
-            });
+
+        t = wrapWithProxyIfNeeded(type, t);
+
+
+        return t;
+    }
+
+    private <T> T wrapWithProxyIfNeeded(Class<T> type, T t) {
+        for (ProxyConfigurator proxyConfigurator : proxyConfigurators) {
+            t = (T) proxyConfigurator.wrapWithProxy(t, type);
         }
         return t;
     }
