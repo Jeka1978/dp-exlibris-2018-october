@@ -11,23 +11,7 @@
 
     <context:property-placeholder location="classpath:application.properties"/>
 
-    <bean id="talkingRobot" class="com.exlibris.quoters.TalkingRobotImpl">
-        <property name="quoters">
-            <list>
-                <ref bean="shakespearQuoter"/>
-                <ref bean="terminatorQuoter"/>
-            </list>
-        </property>
-    </bean>
-    <bean id="shakespearQuoter" class="com.exlibris.quoters.ShakespearQuoter">
-        <property name="message" value="${shake}"/>
-    </bean>
-    <bean id="terminatorQuoter" class="com.exlibris.quoters.TerminatorQuoter" destroy-method="killAll">
-        <property name="messages">
-            <list>
-                <value>I'll be back</value>
-                <value>Astalavista baby</value>
-            </list>
-        </property>
-    </bean>
+
+
+
 </beans>
