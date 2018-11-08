@@ -6,11 +6,14 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import static com.exlibris.quoters.MediaType.BOOK;
+
 /**
  * @author Evgeny Borisov
  */
 @Setter
 @Component
+@Media(BOOK)
 public class ShakespearQuoter implements Quoter {
     @Value("${shake}")
     private String message;

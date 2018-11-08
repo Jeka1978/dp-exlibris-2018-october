@@ -11,8 +11,9 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Retention(RUNTIME)
-@Qualifier
-@Component
 @Autowired
-public @interface Film {
+@Component
+@Qualifier
+public @interface Media {
+    MediaType value();
 }

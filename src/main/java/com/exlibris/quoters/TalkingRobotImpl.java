@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class TalkingRobotImpl implements TalkingRobot {
     @Setter
-    @Autowired
+    @Media(MediaType.FILM)
     private List<Quoter> quoters;
 
 

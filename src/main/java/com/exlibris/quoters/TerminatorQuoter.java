@@ -10,13 +10,14 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 import java.util.List;
 
+import static com.exlibris.quoters.MediaType.FILM;
 import static java.util.Arrays.asList;
 
 /**
  * @author Evgeny Borisov
  */
 
-@Film
+@Media(FILM)
 public class TerminatorQuoter implements Quoter {
 
 

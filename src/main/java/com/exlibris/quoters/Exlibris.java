@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Exlibris {
-    @Film
+    @Media(MediaType.BOOK)
     private Quoter quoter;
 
     @Scheduled(fixedDelay = 1000)
